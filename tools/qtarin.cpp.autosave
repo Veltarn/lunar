@@ -1,0 +1,18 @@
+#include "qtarin.h"
+
+QTarIn::QTarIn(QString &workDirectory, QObject *parent) : QThread(parent), TarIn(workDirectory.toStdString())
+{
+}
+
+void QTarIn::addPath(QString filePath)
+{
+    m_fileListToArchive.enqueue(filePath);
+}
+
+void QTarIn::archive()
+{
+    if(!m_fileListToArchive.isEmpty())
+    {
+        for(QQueue<QString>::iterator it = m_fileListToArchive.begin())
+    }
+}

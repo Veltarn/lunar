@@ -1,0 +1,15 @@
+QScrollBar:vertical
+{
+    background: #ffffff;
+    width: 10px;
+}
+
+QScrollBar::handle:vertical
+{
+    background: #989ea2;
+}
+
+QScrollBar::handle:vertical::hover
+{
+    background: #80a1ba;
+}
