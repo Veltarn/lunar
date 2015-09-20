@@ -125,9 +125,10 @@ HEADERS  += lunarmainwindow.h \
     core/pluginmanager.h \
     gui/pluginswindow.h \
     db/plugins.h \
-    Exceptions/pluginsexception.h
+    Exceptions/pluginsexception.h \
+    core/lunarpluginsinterface.h
 
-INCLUDEPATH  += C:/Users/Veltarn/Documents/Prog/Qt/Lunar/Plugins/Pandore/
+#INCLUDEPATH  += C:/Users/Veltarn/Documents/Prog/Qt/Lunar/Plugins/Pandore/
 
 FORMS    += lunarmainwindow.ui \
     gui/windowprocessmanager.ui \

@@ -8,6 +8,7 @@ void PluginManager::onFirstInit()
     m_pluginsPath = qApp->applicationDirPath() + "/plugins/";
 #endif
     this->discoverPlugins();
+    this->loadEnabledPlugins();
 }
 
 void PluginManager::loadPlugin(int index)
@@ -22,6 +23,21 @@ void PluginManager::loadPlugin(int index)
             plugin->onLoad();
         }
     }*/
+}
+
+void PluginManager::loadEnabledPlugins()
+{
+    QList<Plugin> plugins = Plugins::getPlugins();
+
+    foreach(Plugin pluginInfo, plugins) {
+        if(pluginInfo.enabled) {
+            QPluginLoader *plugin = getPluginByName(pluginInfo.pluginName);
+            if(plugin) {
+                LunarPluginsInterface *lunarPlugin = qobject_cast<LunarPluginsInterface*>(plugin->instance());
+                lunarPlugin->onLoad();
+            }
+        }
+    }
 }
 
 QList<QPluginLoader *> PluginManager::pluginsList()
@@ -45,6 +61,17 @@ QPluginLoader *PluginManager::getPluginByName(QString name)
 void PluginManager::setPluginEnabled(QString name, bool status)
 {
     Plugins::setPluginEnabled(name, status);
+    QPluginLoader *plugin = getPluginByName(name);
+
+    if(status) {
+        LunarPluginsInterface *lunarPlugin = qobject_cast<LunarPluginsInterface*>(plugin->instance());
+        lunarPlugin->onLoad();
+        plugin->load();
+    } else {
+        LunarPluginsInterface *lunarPlugin = qobject_cast<LunarPluginsInterface*>(plugin->instance());
+        lunarPlugin->onUnload();
+        plugin->unload();
+    }
 }
 
 bool PluginManager::isPluginEnabled(QString pluginName)
@@ -72,8 +99,9 @@ void PluginManager::discoverPlugins()
 
 void PluginManager::onDestroyed() {
     foreach(QPluginLoader *qtPlugin, m_pluginsList) {
-        /*PandorePlugin *plugin = qobject_cast<PandorePlugin*>(qtPlugin->instance());
-        plugin->onRelease();*/
+        LunarPluginsInterface *plugin = qobject_cast<LunarPluginsInterface*>(qtPlugin->instance());
+        plugin->onUnload();
+        qtPlugin->unload();
     }
 
     int i = 0;

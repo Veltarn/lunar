@@ -15,7 +15,7 @@ void PluginsWindow::onEnable()
     QPluginLoader *pl = PluginManager::getInstance()->getPluginByName(m_selectedItem->text());
     QString name = pl->metaData().value("MetaData").toObject().value("name").toString();
 
-    PluginManager::setPluginEnabled(name, true);
+    PluginManager::getInstance()->setPluginEnabled(name, true);
     getPluginsData();
 }
 
@@ -24,7 +24,7 @@ void PluginsWindow::onDisable()
     QPluginLoader *pl = PluginManager::getInstance()->getPluginByName(m_selectedItem->text());
     QString name = pl->metaData().value("MetaData").toObject().value("name").toString();
 
-    PluginManager::setPluginEnabled(name, false);
+    PluginManager::getInstance()->setPluginEnabled(name, false);
     getPluginsData();
 }
 
@@ -76,6 +76,8 @@ void PluginsWindow::getPluginsData()
     m_model->setHorizontalHeaderLabels(header);
     populateModel();
     m_pluginView->setModel(m_model);
+    m_enablePluginAction->setEnabled(false);
+    m_disablePluginAction->setEnabled(false);
 }
 
 void PluginsWindow::initGui()

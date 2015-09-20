@@ -22,6 +22,7 @@ class Plugins
 {
 public:
     Plugins();
+    static QList<Plugin> getPlugins();
     static bool pluginExists(QString name);
     static Plugin getPluginByName(QString name);
     static void setPluginEnabled(QString name, bool status);

@@ -5,13 +5,46 @@ Plugins::Plugins()
 
 }
 
+QList<Plugin> Plugins::getPlugins()
+{
+    Database database = Database();
+    database.open();
+    QSqlQuery query(database.db());
+
+    QString sql = "SELECT * FROM plugins";
+
+    if(!query.exec(sql)) {
+        QString errorMessage = QString(QObject::tr("Cannot get plugins list") + "\n" + query.lastError().text());
+        database.close();
+        throw PluginsException(errorMessage);
+    }
+
+    QList<Plugin> plugins;
+
+    while(query.next()) {
+        Plugin plugin;
+        QSqlRecord record = query.record();
+
+        QString pluginName = record.value("name").toString();
+        int i_enabled = record.value("enabled").toInt();
+        bool enabled = i_enabled == 1 ? true : false;
+
+        plugin.pluginName = pluginName;
+        plugin.enabled = enabled;
+
+        plugins.append(plugin);
+    }
+
+    return plugins;
+}
+
 bool Plugins::pluginExists(QString name)
 {
     Database database = Database();
     database.open();
     QSqlQuery query(database.db());
 
-    QString sql = "SELECT * FROM plugins WHERE name = :name";
+    QString sql = "SELECT COUNT(*) FROM plugins WHERE name = :name";
 
     if(!query.prepare(sql)) {
         QString errorMessage = QString(QObject::tr("Cannot get plugins list") + "\n" + query.lastError().text());
@@ -22,14 +55,11 @@ bool Plugins::pluginExists(QString name)
     query.bindValue(":name", name);
     query.exec();
 
-    if(query.size() > 0) {
-        database.close();
-        return true;
-    } else {
-        database.close();
-        return false;
+    int s = -1;
+    while(query.next()) {
+        s = query.value(0).toInt();
     }
-
+    return s;
 }
 
 Plugin Plugins::getPluginByName(QString name)

@@ -10,6 +10,7 @@
 #include <QPluginLoader>
 #include "db/plugins.h"
 #include "tools/singleton.h"
+#include "core/lunarpluginsinterface.h"
 
 class PluginManager : public Singleton<PluginManager>
 {
@@ -17,9 +18,10 @@ class PluginManager : public Singleton<PluginManager>
 public:
      virtual void onFirstInit();
      void loadPlugin(int index);
+     void loadEnabledPlugins();
      QList<QPluginLoader *> pluginsList();
      QPluginLoader* getPluginByName(QString name);
-     static void setPluginEnabled(QString name, bool status);
+     void setPluginEnabled(QString name, bool status);
      static bool isPluginEnabled(QString pluginName);
 protected:
      virtual void onDestroyed();
