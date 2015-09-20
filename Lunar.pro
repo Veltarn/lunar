@@ -64,7 +64,10 @@ SOURCES += main.cpp\
     emulation/commandlinestringreplacer.cpp \
     gui/qmultiplechoices.cpp \
     gui/qdatacheckbox.cpp \
-    core/pluginmanager.cpp
+    core/pluginmanager.cpp \
+    gui/pluginswindow.cpp \
+    db/plugins.cpp \
+    Exceptions/pluginsexception.cpp
 
 HEADERS  += lunarmainwindow.h \
     constants.h \
@@ -119,7 +122,10 @@ HEADERS  += lunarmainwindow.h \
     emulation/commandlinestringreplacer.h \
     gui/qmultiplechoices.h \
     gui/qdatacheckbox.h \
-    core/pluginmanager.h
+    core/pluginmanager.h \
+    gui/pluginswindow.h \
+    db/plugins.h \
+    Exceptions/pluginsexception.h
 
 INCLUDEPATH  += C:/Users/Veltarn/Documents/Prog/Qt/Lunar/Plugins/Pandore/
 

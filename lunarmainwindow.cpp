@@ -222,6 +222,7 @@ void LunarMainWindow::buildMenus()
 
     m_toolsMenu->addAction(m_actionProcessManager);
     m_toolsMenu->addSeparator();
+    m_toolsMenu->addAction(m_actionPlugins);
     m_toolsMenu->addAction(m_actionOptions);
 
     m_helpMenu->addAction(m_actionAboutLunar);
@@ -299,6 +300,7 @@ void LunarMainWindow::initActions()
     m_actionShowEmulators = new QAction(tr("Show Emulators"), this);
 
     m_actionProcessManager  = new QAction(tr("Process manager"), this);
+    m_actionPlugins         = new QAction(tr("Plugins"), this);
     m_actionOptions         = new QAction(tr("Options"), this);
 
     m_actionAboutLunar      = new QAction(tr("About Lunar"), this);
@@ -329,6 +331,7 @@ void LunarMainWindow::initActions()
 
     m_actionOptions->setIcon(QIcon(QPixmap("resources/imgs/settings.png")));
     m_actionProcessManager->setIcon(QIcon(QPixmap("resources/imgs/process.png")));
+    m_actionPlugins->setIcon(QIcon(QPixmap("resources/imgs/plugin.png")));
 
     QToolBar *toolbar = addToolBar("Main");
     toolbar->setMinimumHeight(48);
@@ -368,6 +371,7 @@ void LunarMainWindow::initEvents()
     connect(m_actionExport, SIGNAL(triggered()), this, SLOT(openWindowExport()));
     connect(m_actionImport, SIGNAL(triggered()), this, SLOT(openWindowImport()));
     connect(m_actionShowEmulators, SIGNAL(triggered()), this, SLOT(openEmulatorsWindow()));
+    connect(m_actionPlugins, SIGNAL(triggered()), this, SLOT(onPluginsActionTriggered()));
 }
 
 void LunarMainWindow::addGame()
@@ -431,6 +435,12 @@ void LunarMainWindow::onUninstallProcessFinished(int code)
         this->loadGamesList();
         m_gameInfo->clearInfos();
     }
+}
+
+void LunarMainWindow::onPluginsActionTriggered()
+{
+    PluginsWindow pm(this);
+    pm.exec();
 }
 
 void LunarMainWindow::onEditGameButtonClick()

@@ -46,6 +46,7 @@
 #include "tools/stylesheetmanager.h"
 #include "gui/scrollbar.h"
 #include "gui/emulatorswindow.h"
+#include "gui/pluginswindow.h"
 
 namespace Ui {
 class LunarMainWindow;
@@ -77,6 +78,7 @@ public slots:
     void openWindowImport();
     void openEmulatorsWindow();
     void onUninstallProcessFinished(int code);
+    void onPluginsActionTriggered();
 
 protected:
     void paintEvent(QPaintEvent *pe);
@@ -151,6 +153,7 @@ private:
      *  Tools menu
      */
     QAction *m_actionOptions;
+    QAction *m_actionPlugins;
     QAction *m_actionProcessManager;
 
     /**

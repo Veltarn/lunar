@@ -50,7 +50,7 @@ void Database::initDb()
         tablesList.push_back("CREATE TABLE 'emulators_knowledge_base' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'emulator_name' VARCHAR (30), 'emulated_platform' INTEGER, 'command_line_pattern' TEXT, 'data' BLOB );");
         tablesList.push_back("CREATE TABLE emulators_platforms_junction('emulator_id' INTEGER, 'platform_id' INTEGER)");
         tablesList.push_back("CREATE TABLE 'emulators_knowledge_platforms_junction' ( 'emulator_knowledge_id' INTEGER, 'platform_id' INTEGER)");
-
+        tablesList.push_back("CREATE TABLE 'plugins' ('name' VARCHAR(100), 'enabled' INTEGER)");
 
         for(int i = 0; i < tablesList.size(); i++)
         {
