@@ -143,3 +143,6 @@ RC_FILE += \
 OTHER_FILES += \
     resources/css/HorizontalScrollBar.css \
     resources/css/VerticalScrollBar.css
+
+DISTFILES += \
+    Readme.md
